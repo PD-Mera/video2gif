@@ -8,6 +8,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--input", help="Input video file path")
 parser.add_argument("--output", help="Output gif file path")
 parser.add_argument("--fps", type=int, default=None)
+parser.add_argument("--height", type=int, default=None)
 args = parser.parse_args()
 
 if args.input.split(".")[-1] not in video_ext:
@@ -21,6 +22,9 @@ if args.fps is not None and args.fps <= 0:
     exit()
 
 videoClip = VideoFileClip(args.input)
+
+if args.height is not None:
+    videoClip = videoClip.resize(height=args.height)
 
 videoClip.write_gif(args.output, fps=args.fps)
 
